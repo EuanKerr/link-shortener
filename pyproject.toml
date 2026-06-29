@@ -1,0 +1,26 @@
+[project]
+name = "link-shortener"
+version = "1.0.0"
+description = "Minimal self-hosted URL shortener"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic-settings>=2.5",
+    # Floors held at the security fixes (not just any compatible release) so a
+    # non-locked install can't pull a known-vulnerable version: jinja2 3.1.6
+    # fixes CVE-2025-27516, python-multipart 0.0.18 fixes CVE-2024-53981.
+    "jinja2>=3.1.6",
+    "python-multipart>=0.0.18",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.27",
+]
+
+[tool.pytest.ini_options]
+# Make the project root importable so tests can `import app` without an
+# editable install or a tests/__init__.py package marker.
+pythonpath = ["."]

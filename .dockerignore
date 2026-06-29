@@ -1,0 +1,12 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+docs
+tests
+README.md
+nginx.example.conf
+dev-links.db
+*.db

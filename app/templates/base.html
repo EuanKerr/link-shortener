@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content="dark light" />
+    <title>{% block title %}Link Shortener{% endblock %}</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/static/style.css" />
+    {% block head_extra %}{% endblock %}
+  </head>
+  <body>
+    <main class="{% block main_class %}card{% endblock %}">
+      {% block content %}{% endblock %}
+    </main>
+    {% block scripts %}<script src="/static/app.js" defer></script>{% endblock %}
+  </body>
+</html>

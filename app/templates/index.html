@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Shorten a link{% endblock %}
+{% block content %}
+<h1>Shorten a link</h1>
+<form class="form" method="post" action="/shorten">
+  <input
+    type="url"
+    name="url"
+    inputmode="url"
+    autocomplete="off"
+    aria-label="URL to shorten"
+    placeholder="https://example.com/very/long/link"
+    value="{{ url | default('') }}"
+    required
+    autofocus
+  />
+  <button type="submit">Shorten</button>
+</form>
+
+{% if error %}
+<p class="error" role="alert">{{ error }}</p>
+{% endif %}
+
+{% if short_url %}
+<div class="result">
+  <input id="short" class="short" type="text" value="{{ short_url }}" aria-label="Shortened URL" readonly />
+  <button id="copy" type="button" data-target="short">Copy</button>
+</div>
+{% endif %}
+{% endblock %}

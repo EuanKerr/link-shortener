@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Link Shortener (app-specific) ---
+# The dev DB_PATH default is dev-links.db and SQLite runs in WAL mode, so local
+# runs create the .db file plus -wal/-shm sidecars in the repo root. The upstream
+# template above only ignores db.sqlite3, not these. Mirrors .dockerignore.
+dev-links.db
+*.db
+*.db-wal
+*.db-shm

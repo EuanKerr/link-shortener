@@ -1,0 +1,38 @@
+services:
+  shortener:
+    build: .
+    restart: unless-stopped
+    # Bind to localhost only; nginx on the host proxies to this upstream.
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      # Set this to the public URL nginx serves. No trailing slash.
+      BASE_URL: "https://s.example.com"
+      DB_PATH: "/data/links.db"
+    volumes:
+      - links-data:/data
+      # Sized RAM scratch space for transient writes; bounding it stops a flood
+      # from drawing on all host RAM through /tmp.
+      - type: tmpfs
+        target: /tmp
+        tmpfs:
+          size: "16m"
+    # --- Runtime hardening ---
+    read_only: true              # Immutable root FS; only the volume below is writable.
+    mem_limit: 256m              # Cap memory so a flood OOM-kills the container, not the host.
+    pids_limit: 256              # Contain fork/thread exhaustion.
+    cap_drop:
+      - ALL                      # The app needs no Linux capabilities (binds an unprivileged port).
+    security_opt:
+      - no-new-privileges:true   # Block privilege escalation via setuid binaries.
+    # Cap container logs so they can't grow unbounded on the host disk, finishing
+    # the "a flood can't exhaust host resources" posture above (RAM and PIDs are
+    # already bounded).
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  links-data:

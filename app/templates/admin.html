@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Manage links{% endblock %}
+{% block head_extra %}<meta name="robots" content="noindex, nofollow" />{% endblock %}
+{% block main_class %}card card--wide{% endblock %}
+{% block content %}
+<h1>Manage links</h1>
+
+{% if links %}
+<table class="links">
+  <thead>
+    <tr>
+      <th>Short code</th>
+      <th>Destination</th>
+      <th>Created</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for link in links %}
+    <tr>
+      <td class="code">{{ link.code }}</td>
+      <td class="dest">{{ link.url }}</td>
+      <td class="created">{{ link.created_at }}</td>
+      <td class="actions">
+        <form
+          method="post"
+          action="/admin/delete"
+          data-confirm="Delete this short link? This cannot be undone."
+        >
+          <input type="hidden" name="code" value="{{ link.code }}" />
+          <button type="submit" class="btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty">No links yet.</p>
+{% endif %}
+{% endblock %}
