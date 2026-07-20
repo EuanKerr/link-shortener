@@ -7,7 +7,7 @@
 # Base pinned by digest for reproducible builds (the tag alone is mutable).
 # Refresh deliberately during dependency updates with:
 #   docker buildx imagetools inspect python:3.14-slim
-FROM python:3.14-slim@sha256:b877e50bd90de10af8d82c57a022fc2e0dc731c5320d762a27986facfc3355c1 AS builder
+FROM python:3.14-slim@sha256:cea0e6040540fb2b965b6e7fb5ffa00871e632eef63719f0ea54bca189ce14a6 AS builder
 
 # uv pinned to an exact version (never :latest) for reproducible builds.
 COPY --from=ghcr.io/astral-sh/uv:0.9.26 /uv /usr/local/bin/uv
@@ -30,7 +30,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # ---------------------------------------------------------------------------
 # Runtime: minimal image with just the venv + app source, running as non-root.
 # ---------------------------------------------------------------------------
-FROM python:3.14-slim@sha256:b877e50bd90de10af8d82c57a022fc2e0dc731c5320d762a27986facfc3355c1
+FROM python:3.14-slim@sha256:cea0e6040540fb2b965b6e7fb5ffa00871e632eef63719f0ea54bca189ce14a6
 
 LABEL org.opencontainers.image.title="link-shortener" \
       org.opencontainers.image.description="Minimal self-hosted URL shortener" \
